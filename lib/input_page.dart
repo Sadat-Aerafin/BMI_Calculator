@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'card_widget.dart';
 import 'reuseable_card.dart';
+import 'constants.dart';
+import 'package:bmi_calculator/RoundIconButton.dart';
 
-const bottomContainerHeight = 80.0;
-const activeCardColors = Color(0xFF1D1E33);
-const inactiveCardColors = Color(0xFF111328);
-const bottomContainerColor = Colors.tealAccent;
+int sliderValue = 180;
+int weightValue = 60;
+int ageValue = 20;
 
 enum GenderType {
   male,
@@ -20,7 +21,7 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   GenderType selectedGender;
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +29,7 @@ class _InputPageState extends State<InputPage> {
         title: Text('BMI Calculator'),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             child: Row(
@@ -41,8 +43,8 @@ class _InputPageState extends State<InputPage> {
                     },
                     child: ReuseableCard(
                       colour: selectedGender == GenderType.male
-                          ? activeCardColors
-                          : inactiveCardColors,
+                          ? kActiveCardColors
+                          : kInactiveCardColors,
                       cardChild: CardWidget(
                         cardIcons: FontAwesomeIcons.mars,
                         cardText: 'MALE',
@@ -59,8 +61,8 @@ class _InputPageState extends State<InputPage> {
                     },
                     child: ReuseableCard(
                       colour: selectedGender == GenderType.female
-                          ? activeCardColors
-                          : inactiveCardColors,
+                          ? kActiveCardColors
+                          : kInactiveCardColors,
                       cardChild: CardWidget(
                         cardIcons: FontAwesomeIcons.venus,
                         cardText: 'Female',
@@ -73,7 +75,55 @@ class _InputPageState extends State<InputPage> {
           ),
           Expanded(
             child: ReuseableCard(
-              colour: activeCardColors,
+              colour: kActiveCardColors,
+              cardChild: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'HEIGHT',
+                    style: kCardTextStyle,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(
+                        sliderValue.toString(),
+                        style: kCardNumbersTextStyle,
+                      ),
+                      Text(
+                        'cm',
+                        style: kCardTextStyle,
+                      )
+                    ],
+                  ),
+                  SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      thumbColor: Colors.tealAccent,
+                      activeTrackColor: Colors.white,
+                      inactiveTrackColor: Colors.grey,
+                      overlayColor: Colors.teal,
+                      overlayShape:
+                          RoundSliderOverlayShape(overlayRadius: 28.0),
+                      thumbShape:
+                          RoundSliderThumbShape(enabledThumbRadius: 12.0),
+                    ),
+                    child: Slider(
+                      value: sliderValue.toDouble(),
+                      min: 120,
+                      max: 220,
+                      onChanged: (double newValue) {
+                        setState(
+                          () {
+                            sliderValue = newValue.toInt();
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(
@@ -81,20 +131,94 @@ class _InputPageState extends State<InputPage> {
               children: [
                 Expanded(
                   child: ReuseableCard(
-                    colour: activeCardColors,
+                    colour: kActiveCardColors,
+                    cardChild: Column(
+                      children: [
+                        Text(
+                          'WEIGHT',
+                          style: kCardTextStyle,
+                        ),
+                        Text(
+                          weightValue.toString(),
+                          style: kCardNumbersTextStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.plus,
+                              action: () {
+                                setState(() {
+                                  weightValue++;
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.minus,
+                              action: () {
+                                setState(() {
+                                  weightValue--;
+                                });
+                              },
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Expanded(
                   child: ReuseableCard(
-                    colour: activeCardColors,
+                    colour: kActiveCardColors,
+                    cardChild: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'AGE',
+                          style: kCardTextStyle,
+                        ),
+                        Text(
+                          ageValue.toString(),
+                          style: kCardNumbersTextStyle,
+                        ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        RoundIconButton(
+                          icon: FontAwesomeIcons.plus,
+                          action: () {
+                            setState(() {
+                              ageValue++;
+                            });
+                          },
+                        ),
+                        SizedBox(
+                          width: 10.0,
+                        ),
+                        RoundIconButton(
+                          icon: FontAwesomeIcons.minus,
+                          action: () {
+                            setState(() {
+                              ageValue--;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+
+                      ],
+                    ),
                   ),
                 ),
               ],
             ),
           ),
           Container(
-            color: bottomContainerColor,
-            height: bottomContainerHeight,
+            color: kBottomContainerColor,
+            height: kBottomContainerHeight,
             width: double.infinity,
             margin: EdgeInsets.only(top: 15.0),
           ),
@@ -103,3 +227,4 @@ class _InputPageState extends State<InputPage> {
     );
   }
 }
+//making a new Icon widget

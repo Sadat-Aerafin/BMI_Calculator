@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
+import 'constants.dart';
 
-const cardTextStyle= TextStyle(
-  fontSize: 20.0,
-  color: Colors.grey,
-);
 
 class CardWidget extends StatelessWidget {
   CardWidget({this.cardIcons, this.cardText});
@@ -24,7 +21,7 @@ class CardWidget extends StatelessWidget {
         ),
         Text(
           cardText,
-          style:cardTextStyle,
+          style:kCardTextStyle,
         ),
       ],
     );
