@@ -1,9 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'card_widget.dart';
-import 'reuseable_card.dart';
-import 'constants.dart';
-import 'package:bmi_calculator/RoundIconButton.dart';
+import '../components/card_widget.dart';
+import '../components/reuseable_card.dart';
+import '../constants.dart';
+import 'file:///C:/Users/Sadat%20Aerafin/AndroidStudioProjects/bmi_calculator/lib/components/RoundIconButton.dart';
+import 'result.dart';
+import '../components/buttom_button.dart';
 
 int sliderValue = 180;
 int weightValue = 60;
@@ -184,31 +187,30 @@ class _InputPageState extends State<InputPage> {
                           ageValue.toString(),
                           style: kCardNumbersTextStyle,
                         ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        RoundIconButton(
-                          icon: FontAwesomeIcons.plus,
-                          action: () {
-                            setState(() {
-                              ageValue++;
-                            });
-                          },
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.plus,
+                              action: () {
+                                setState(() {
+                                  ageValue++;
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            RoundIconButton(
+                              icon: FontAwesomeIcons.minus,
+                              action: () {
+                                setState(() {
+                                  ageValue--;
+                                });
+                              },
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          width: 10.0,
-                        ),
-                        RoundIconButton(
-                          icon: FontAwesomeIcons.minus,
-                          action: () {
-                            setState(() {
-                              ageValue--;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-
                       ],
                     ),
                   ),
@@ -216,15 +218,21 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          Container(
-            color: kBottomContainerColor,
-            height: kBottomContainerHeight,
-            width: double.infinity,
-            margin: EdgeInsets.only(top: 15.0),
+          ButtomButton(
+            buttonTitle: ' CALCULATE',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return ResultPage();
+                  },
+                ),
+              );
+            },
           ),
         ],
       ),
     );
   }
 }
-//making a new Icon widget
